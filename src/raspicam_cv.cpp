@@ -112,9 +112,10 @@ namespace raspicam {
         case cv::CAP_PROP_GAIN :
             return  Scaler::scale ( 0,800,0,100, _impl->getISO() );
         case cv::CAP_PROP_EXPOSURE :
-            if ( _impl->getShutterSpeed() ==0 )
-                return -1;//auto
-            else return Scaler::scale (0,330000, 0,100, _impl->getShutterSpeed() )  ;
+//          if ( _impl->getShutterSpeed() ==0 )
+//              return -1;//auto
+//          else return Scaler::scale (0,330000, 0,100, _impl->getShutterSpeed() )  ;
+            return _impl->getExposure();
 	   break;
         default :
             return -1;
@@ -166,9 +167,54 @@ namespace raspicam {
         case cv::CAP_PROP_EXPOSURE :
             if ( value>0 && value<=100 ) { 
                 _impl->setShutterSpeed ( Scaler::scale ( 0,100,0,330000, value ) );
+            } else if (value==-1){
+                _impl->setExposure ( RASPICAM_EXPOSURE_NIGHT );
+                _impl->setShutterSpeed ( 0 );
+                std::cout << "setExposure Mode : RASPICAM_EXPOSURE_NIGHT" << std::endl;
+            } else if (value==-2){
+                _impl->setExposure ( RASPICAM_EXPOSURE_NIGHTPREVIEW );
+                _impl->setShutterSpeed ( 0 );
+                std::cout << "setExposure Mode : RASPICAM_EXPOSURE_NIGHTPREVIEW" << std::endl;
+            } else if (value==-3){
+                _impl->setExposure ( RASPICAM_EXPOSURE_BACKLIGHT );
+                _impl->setShutterSpeed ( 0 );
+                std::cout << "setExposure Mode : RASPICAM_EXPOSURE_BACKLIGHT" << std::endl;
+            } else if (value==-4){
+                _impl->setExposure ( RASPICAM_EXPOSURE_SPOTLIGHT );
+                _impl->setShutterSpeed ( 0 );
+                std::cout << "setExposure Mode : RASPICAM_EXPOSURE_SPOTLIGHT" << std::endl;
+            } else if (value==-5){
+                _impl->setExposure ( RASPICAM_EXPOSURE_SPORTS );
+                _impl->setShutterSpeed ( 0 );
+                std::cout << "setExposure Mode : RASPICAM_EXPOSURE_SPORTS" << std::endl;
+            } else if (value==-6){
+                _impl->setExposure ( RASPICAM_EXPOSURE_SNOW );
+                _impl->setShutterSpeed ( 0 );
+                std::cout << "setExposure Mode : RASPICAM_EXPOSURE_SNOW" << std::endl;
+            } else if (value==-7){
+                _impl->setExposure ( RASPICAM_EXPOSURE_BEACH );
+                _impl->setShutterSpeed ( 0 );
+                std::cout << "setExposure Mode : RASPICAM_EXPOSURE_BEACH" << std::endl;
+            } else if (value==-8){
+                _impl->setExposure ( RASPICAM_EXPOSURE_VERYLONG );
+                _impl->setShutterSpeed ( 0 );
+                std::cout << "setExposure Mode : RASPICAM_EXPOSURE_VERYLONG" << std::endl;
+            } else if (value==-9){
+                _impl->setExposure ( RASPICAM_EXPOSURE_FIXEDFPS );
+                _impl->setShutterSpeed ( 0 );
+                std::cout << "setExposure Mode : RASPICAM_EXPOSURE_FIXEDFPS" << std::endl;
+            } else if (value==-10){
+                _impl->setExposure ( RASPICAM_EXPOSURE_ANTISHAKE );
+                _impl->setShutterSpeed ( 0 );
+                std::cout << "setExposure Mode : RASPICAM_EXPOSURE_ANTISHAKE" << std::endl;
+            } else if (value==-11){
+                _impl->setExposure ( RASPICAM_EXPOSURE_FIREWORKS );
+                _impl->setShutterSpeed ( 0 );
+                std::cout << "setExposure Mode : RASPICAM_EXPOSURE_FIREWORKS" << std::endl;
             } else {
                 _impl->setExposure ( RASPICAM_EXPOSURE_AUTO );
                 _impl->setShutterSpeed ( 0 );
+                std::cout << "setExposure Mode : RASPICAM_EXPOSURE_AUTO" << std::endl;
             }
             break;
         case cv::CAP_PROP_CONVERT_RGB :
